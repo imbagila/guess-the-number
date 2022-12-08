@@ -1,26 +1,36 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"math/rand"
 	"time"
 )
 
-var guess int
-var answer int
+var guess int64
+var answer int64
+var max *int64
+var isMe *bool
 
 func main() {
 	rand.Seed(time.Now().UnixNano())
+
+	max = flag.Int64("max", 100, "maximum random number")
+	isMe = flag.Bool("isMe", true, "true (default) if you wants to play, false if you wants computer to solve")
+	flag.Parse()
+
 	play()
 }
 
 func play() {
 	randomNumber()
-	inputNumber()
+	if *isMe {
+		inputNumber()
+	}
 }
 
 func randomNumber() {
-	answer = rand.Intn(100)
+	answer = rand.Int63n(*max)
 }
 
 func inputNumber() {
