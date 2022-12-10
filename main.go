@@ -26,7 +26,9 @@ func play() {
 	randomNumber()
 	if *isMe {
 		inputNumber()
+		return
 	}
+	computerSolve(0, *max, *max, 0)
 }
 
 func randomNumber() {
@@ -52,5 +54,18 @@ func check() {
 		inputNumber()
 	default:
 		fmt.Println("Correct !")
+	}
+}
+
+func computerSolve(low int64, i int64, high int64, counter int64) {
+	switch {
+	case i > answer:
+		fmt.Printf("Try %d: %d\n", counter, i)
+		computerSolve(low, (i+low)/2, i, counter+1)
+	case i < answer:
+		fmt.Printf("Try %d: %d\n", counter, i)
+		computerSolve(i, (i+high)/2, high, counter+1)
+	default:
+		fmt.Printf("Try %d: %d | Correct !\n", counter, i)
 	}
 }
